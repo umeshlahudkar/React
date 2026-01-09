@@ -14,15 +14,41 @@
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
 
-      function ChatInput() {
+      function ChatInput({messages, setMessages}) {
+
+        const [text, setText] = React.useState("");
+
+        function OnTextChange(event) {
+          setText(event.target.value);
+        }
+
+        function OnSendButtonClick() {
+
+          setMessages([
+            ...messages,
+            {
+              message:text, 
+              sender:"user"
+            }]
+          );
+          
+          setText("");
+        }
+
         return (
           <>
             <input 
               type="text" 
               placeholder="Send a message to ChatBot" 
+              onChange = {OnTextChange}
+              value = {text}
             />
 
-            <button type="button">Send</button>
+            <button 
+              type="button"
+              onClick = {OnSendButtonClick}>
+                 Send
+              </button>
           </>
         );
       }
@@ -37,22 +63,39 @@
         );
       }
 
-      function App() {
-
-        const mesagesArray = [{message : "Hello Chatbot", sender : "uer"}, 
-        {message : "Hello User, HOw you have been doing?", sender : "robot"}];
-
+      function ChatMessages({messages}) {
         return (
           <>
-            <ChatInput />
-            {mesagesArray.map((msg, index)=> {
-              return (
-                <ChatMessage
+            {messages.map((msg, index) => 
+              {
+                return <ChatMessage
                   key = {index} 
                   message={msg.message} 
                   sender={msg.sender} 
-                />)
-            })}
+                />
+              })}
+          </>
+        );
+      }
+
+      function App() {
+        
+        const [messages, setMessages] = React.useState([]);
+
+        React.useEffect(()=>
+        {
+            console.log(messages);
+        }, [messages]);
+
+        return (
+          <>
+            <ChatInput 
+              messages = {messages}
+              setMessages = {setMessages}
+            />
+
+            <ChatMessages messages = {messages} />
+
           </>
         );
       }
