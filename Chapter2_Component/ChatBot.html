@@ -17,20 +17,48 @@
       function ChatInput() {
         return (
           <>
-            <input type="text" placeholder="Send a message to ChatBot" />
+            <input 
+              type="text" 
+              placeholder="Send a message to ChatBot" 
+            />
+
             <button type="button">Send</button>
           </>
         );
       }
-      
-      const app = (
-        <>
-          <ChatInput />
-        </>
-      );
 
+      function ChatMessage({message, sender}) {
+        return  (
+          <div>
+            {sender === 'robot' && <img src="robot.png" alt="User Img" width="50" />}
+            <span>{message}</span>
+            {sender !== 'robot' && <img src="user.png" alt="User Img" width="50" />}
+          </div>
+        );
+      }
+
+      function App() {
+
+        const mesagesArray = [{message : "Hello Chatbot", sender : "uer"}, 
+        {message : "Hello User, HOw you have been doing?", sender : "robot"}];
+
+        return (
+          <>
+            <ChatInput />
+            {mesagesArray.map((msg, index)=> {
+              return (
+                <ChatMessage
+                  key = {index} 
+                  message={msg.message} 
+                  sender={msg.sender} 
+                />)
+            })}
+          </>
+        );
+      }
+      
       const container = document.querySelector('.js-container');
-      ReactDOM.createRoot(container).render(app);
+      ReactDOM.createRoot(container).render(<App />);
     </script>
   </body>
 </html>
