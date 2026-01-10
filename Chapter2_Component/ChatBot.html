@@ -4,6 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatBot</title>
+   <style>
+      .chat-input-container {
+        display: flex;
+        gap: 5px;
+      }
+
+      .input-field {
+        flex-grow: 1;
+        font-size: 15px;
+        padding: 8px 12px;
+        border-radius: 5px;
+      }
+
+      .send-btn {
+        font-size: 15px;
+        padding: 8px 15px;
+        border-radius: 5px;
+        background-color: green;
+        border: none;
+        color: white;
+        cursor: pointer;
+      }
+   </style>
+
   </head>
   <body>
      <div class="js-container"></div>
@@ -36,20 +60,22 @@
         }
 
         return (
-          <>
+          <div className = "chat-input-container">
             <input 
               type="text" 
               placeholder="Send a message to ChatBot" 
               onChange = {OnTextChange}
               value = {text}
+              className = "input-field"
             />
 
             <button 
               type="button"
-              onClick = {OnSendButtonClick}>
+              onClick = {OnSendButtonClick}
+              className = "send-btn">
                  Send
               </button>
-          </>
+          </div>
         );
       }
 
