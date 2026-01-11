@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatBot</title>
    <style>
+      *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+     
       .chat-input-container {
         display: flex;
         gap: 5px;
@@ -28,8 +35,44 @@
       }
 
       .app-container {
-        width: 600px;
+        max-width: 600px;
         margin: auto;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        padding: 10px;
+      }
+
+      .chat-message-container {
+        overflow: scroll;
+        scrollbar-width: none ;
+      }
+
+      .chat-message-user {
+        display: flex;
+        gap:10px;
+        justify-content: end;
+        align-items:start;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+
+      .chat-message-text {
+        max-width: 300px;
+        background-color: rgb(163, 163, 175);
+
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: pre-wrap;
+        text-align: end;
+
+        padding: 10px 15px;
+        border-radius: 5px;
+      }
+
+      .chat-massage-img {
+        width: 45px;
       }
    </style>
 
@@ -86,17 +129,17 @@
 
       function ChatMessage({message, sender}) {
         return  (
-          <div>
-            {sender === 'robot' && <img src="robot.png" alt="User Img" width="50" />}
-            <span>{message}</span>
-            {sender !== 'robot' && <img src="user.png" alt="User Img" width="50" />}
+          <div className = {sender === "robot" ? "chat-message-robot" : "chat-message-user"}>
+            {sender === 'robot' && <img className = "chat-message-img" src="robot.png" alt="User Img"/>}
+            <p className = "chat-message-text">{message}</p>
+            {sender !== 'robot' && <img className = "chat-massage-img" src="user.png" alt="User Img"/>}
           </div>
         );
       }
 
       function ChatMessages({messages}) {
         return (
-          <>
+          <div className = "chat-message-container">
             {messages.map((msg, index) => 
               {
                 return <ChatMessage
@@ -105,7 +148,7 @@
                   sender={msg.sender} 
                 />
               })}
-          </>
+          </div>
         );
       }
 
@@ -120,12 +163,13 @@
 
         return (
           <div className = "app-container">
-            <ChatInput 
+
+            <ChatMessages messages = {messages} />
+
+             <ChatInput 
               messages = {messages}
               setMessages = {setMessages}
             />
-
-            <ChatMessages messages = {messages} />
 
           </div>
         );
