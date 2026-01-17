@@ -21,3 +21,9 @@ function GetAverage(a, b, c) {
 
 let avg = GetAverage(15, 15, 100);
 console.log(`Average is : ${avg}`);
+
+let GetMultiple = (num1, num2) => {
+  return num1 * num2;
+}
+
+console.log(GetMultiple(2, 3));
